@@ -22,7 +22,7 @@ $form = $this->beginWidget('CActiveForm', array(
     <?php echo $form->labelEx($model, 'cat_id', array('class' => 'col-sm-3 control-label no-padding-right')) ?>
 
     <div class="col-sm-9">
-        <?php echo $form->dropDownList($model, 'cat_id', $list, array('class' => 'col-xs-10 col-sm-5', 'prompt' => '--请选择分类--')) ?>
+        <?php echo $form->dropDownList($model, 'cat_id', $list, array('class' => 'col-xs-10 col-sm-5 cat_id', 'prompt' => '--请选择分类--')) ?>
     </div>
 </div>
 <div class="clearfix form-actions">

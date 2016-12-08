@@ -18,7 +18,11 @@ class GoodsController extends AdminBaseController {
     //put your code here
     public function actionIndex() {
         $this->breadcrumbs = array($this->page_name.'管理');
+        $name = Yii::app()->request->getParam('name','');
         $criteria = new CDbCriteria();
+        if($name){
+            $criteria->addSearchCondition('name', $name);
+        }
         $model = Goods::model()->findAll($criteria);
         $this->render('index', array('model'=>$model));
     }
@@ -39,7 +43,12 @@ class GoodsController extends AdminBaseController {
         $id = Yii::app()->request->getParam('id', 0);
         $model = Goods::model()->findByPk($id);
         $this->checkEmpty($model);
-        $this->render('_form', array('model' => $model));
+        $data = GoodsCategory::getGoodsCategory();
+        $list = array();
+        foreach ($data['unlimit'] as $k => $v){
+            $list[$v['id']] = $v['html'].$v['name'];
+        }
+        $this->render('_form', array('model' => $model,'list'=>$list));
     }
 
     public function actionSave() {
@@ -48,7 +57,7 @@ class GoodsController extends AdminBaseController {
             $model = Goods::model()->findByPk($id);
         } else {
             $model = new Goods();
-            $model->create_time = time();
+            $model->created = time();
         }
         try {
             $model->attributes = Yii::app()->request->getPost('Goods');

@@ -30,6 +30,7 @@ class Goods extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('cat_id, created', 'required'),
+			array('cat_id', 'catIdVerify'),
 			array('cat_id, created', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>64),
 			// The following rule is used by search().
@@ -37,6 +38,18 @@ class Goods extends CActiveRecord
 			array('id, name, cat_id, created', 'safe', 'on'=>'search'),
 		);
 	}
+        
+         /**
+     * 验证cat_id的数值
+     * @param type $attribute
+     * @param type $params 
+     */
+    public function catIdVerify($attribute, $params) {
+        $model = GoodsCategory::model()->findByPk($this->$attribute);;
+        if ($model->level != 2) {
+            $this->addError($attribute, '请选择二级分类');
+        }
+    }
 
 	/**
 	 * @return array relational rules.
