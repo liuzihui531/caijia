@@ -26,9 +26,12 @@ class GoodsController extends AdminBaseController {
     public function actionCreate() {
         $this->breadcrumbs = array('添加'.$this->page_name);
         $model = new Goods();
-        $this->is_ueditor = true;//用到ueditor编辑器
-        $this->is_upload = true;//用到图片上传
-        $this->render('_form', array('model' => $model));
+        $data = GoodsCategory::getGoodsCategory();
+        $list = array();
+        foreach ($data['unlimit'] as $k => $v){
+            $list[$v['id']] = $v['html'].$v['name'];
+        }
+        $this->render('_form', array('model' => $model,'list'=>$list));
     }
 
     public function actionUpdate() {
@@ -36,9 +39,6 @@ class GoodsController extends AdminBaseController {
         $id = Yii::app()->request->getParam('id', 0);
         $model = Goods::model()->findByPk($id);
         $this->checkEmpty($model);
-        $this->is_ueditor = true;//用到ueditor编辑器
-        $this->is_upload = true;//用到图片上传
-        $model->content = Utils::deSlashes($model->content);
         $this->render('_form', array('model' => $model));
     }
 
@@ -52,8 +52,6 @@ class GoodsController extends AdminBaseController {
         }
         try {
             $model->attributes = Yii::app()->request->getPost('Goods');
-            $model->content = Utils::enSlashes($model->content);
-            $model->image = implode(",", Yii::app()->request->getPost('image'));
             $model->save();
             if ($model->hasErrors()) {
                 throw new Exception(Utils::getFirstError($model->errors));

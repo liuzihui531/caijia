@@ -35,7 +35,7 @@ class GoodsCategory extends CActiveRecord {
     	$unlimit = array();
     	$subUnlimit = array();
     	foreach ($model as $key => $val) {
-    		$data[$val->areacode] = $val->areaname;
+    		$data[$val->id] = $val->name;
     	}
     	$unlimit = Utils::getUnLimitClass(Utils::object2array($model));
     	$subUnlimit = Utils::getSubUnlimit($model);

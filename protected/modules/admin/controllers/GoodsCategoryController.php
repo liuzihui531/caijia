@@ -87,6 +87,7 @@ class GoodsCategoryController extends AdminBaseController {
             if ($model->hasErrors()) {
                 throw new Exception(Utils::getFirstError($model->errors));
             }
+            GoodsCategory::setGoodsCategory();
             $this->handleResult(1, '操作成功', $this->createUrl('index'));
         } catch (Exception $ex) {
             $this->handleResult(0, '操作失败,原因:' . $ex->getMessage());
@@ -100,6 +101,7 @@ class GoodsCategoryController extends AdminBaseController {
         $criteria->addInCondition('id', $id);
         $res = GoodsCategory::model()->deleteAll($criteria);
         if ($res) {
+            GoodsCategory::setGoodsCategory();
             $this->handleResult(1, '操作成功');
         } else {
             $this->handleResult(0, '操作失败');
