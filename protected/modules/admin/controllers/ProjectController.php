@@ -26,17 +26,16 @@ class ProjectController extends AdminBaseController {
     public function actionCreate() {
         $this->breadcrumbs = array('添加' . $this->page_name);
         $model = new Project();
-        $this->is_ueditor = true; //用到ueditor编辑器
-        $goods_category = GoodsCategory::getGoodsCategory();
-        $goods_category = $goods_category['unlimit'];
-        $goodsModel = Goods::model()->findAll();
-        $goodsData = array();
-        if ($goodsModel) {
-            foreach ($goodsModel as $key => $val) {
-                $goodsData[$val->cat_id][$val->id] = $val->attributes;
-            }
-        }
-        $modelGoodsIds = $model && $model->goods_ids ? explode(",", $model->goods_ids) : array();
+//        $goods_category = GoodsCategory::getGoodsCategory();
+//        $goods_category = $goods_category['unlimit'];
+//        $goodsModel = Goods::model()->findAll();
+//        $goodsData = array();
+//        if ($goodsModel) {
+//            foreach ($goodsModel as $key => $val) {
+//                $goodsData[$val->cat_id][$val->id] = $val->attributes;
+//            }
+//        }
+//        $modelGoodsIds = $model && $model->goods_ids ? explode(",", $model->goods_ids) : array();
         $this->render('_form', array('model' => $model, 'goods_category' => $goods_category, 'goodsData' => $goodsData, 'modelGoodsIds' => $modelGoodsIds));
     }
 
@@ -45,7 +44,6 @@ class ProjectController extends AdminBaseController {
         $id = Yii::app()->request->getParam('id', 0);
         $model = Project::model()->findByPk($id);
         $this->checkEmpty($model);
-        $this->is_ueditor = true; //用到ueditor编辑器
         $this->render('_form', array('model' => $model));
     }
 
@@ -67,7 +65,7 @@ class ProjectController extends AdminBaseController {
             $model->first = $this->getFirst($first);
             $model->second = $this->getSecond($second);
             $model->depart_ids = $post['depart_ids'] ? implode(',', $post['depart_ids']) : "";
-            $model->goods_ids = $goods_ids ? implode(',', $goods_ids) : "";
+//            $model->goods_ids = $goods_ids ? implode(',', $goods_ids) : "";
             $model->begin_date = strtotime($post['begin_date']);
             $model->end_date = strtotime($post['end_date']);
             if ($model->end_date < $model->begin_date) {
@@ -75,9 +73,9 @@ class ProjectController extends AdminBaseController {
             }
             $model->desc = Utils::enSlashes($post['desc']);
             $model->save();
-            $r1 = ProjectDepartRelation::batchInsert($model->id, $post['depart_ids']);
-            $r2 = ProjectGoodsRelation::batchInsert($model->id, $goods_ids);
-            if (!$r1 || !$r2 || $model->hasErrors()) {
+            $r = ProjectDepartRelation::batchInsert($model->id, $post['depart_ids']);
+//            $r2 = ProjectGoodsRelation::batchInsert($model->id, $goods_ids);
+            if (!$r || $model->hasErrors()) {
                 throw new Exception(Utils::getFirstError($model->errors));
             }
             $transaction->commit();

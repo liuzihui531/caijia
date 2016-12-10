@@ -34,7 +34,7 @@ class Project extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('desc,depart_ids,goods_ids', 'required'),
+			array('desc,depart_ids', 'required'),
 			array('begin_date, end_date, created', 'numerical', 'integerOnly'=>true),
 			array('name, place_ids, goods_ids, depart_ids', 'length', 'max'=>64),
 			array('first, second', 'length', 'max'=>32),

@@ -48,44 +48,49 @@ $form = $this->beginWidget('CActiveForm', array(
         </div>
     </div>
 </div>
-<div class="form-group">
-    <?php echo $form->labelEx($model, 'goods_ids', array('class' => 'col-sm-3 control-label no-padding-right')) ?>
+<!--<div class="form-group">
+<?php echo $form->labelEx($model, 'goods_ids', array('class' => 'col-sm-3 control-label no-padding-right')) ?>
     <div class="col-sm-9">
-        <?php if ($goods_category): ?>
-            <table id="sample-table-1" class="table table-striped table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <th width='200'>商品分类</th>
-                        <th>商品</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($goods_category as $k => $v): ?>
-                        <tr>
-                            <td><?php echo $v['html'] . $v['name']; ?></td>
-                            <td>
-                                <?php if (isset($goodsData[$v['id']])): ?>
-                                    <?php foreach ($goodsData[$v['id']] as $key => $val): ?>
-                                        <label class="pull-left place-checkbox">
-                                            <input type="checkbox" <?php if (in_array($val['id'], $modelGoodsIds)): ?>checked='checked'<?php endif ?> class="ace" name='goods_ids[]' value='<?php echo $val['id'] ?>'>
-                                            <span class="lbl"> <?php echo $val['name'] ?>&nbsp;&nbsp;</span>
-                                        </label>
-                                    <?php endforeach ?>
-                                <?php endif ?>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        <?php endif; ?>
+<?php if ($goods_category): ?>
+                    <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th width='200'>商品分类</th>
+                                <th>商品</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+    <?php foreach ($goods_category as $k => $v): ?>
+                                        <tr>
+                                            <td><?php echo $v['html'] . $v['name']; ?></td>
+                                            <td>
+        <?php if (isset($goodsData[$v['id']])): ?>
+            <?php foreach ($goodsData[$v['id']] as $key => $val): ?>
+                                                                        <label class="pull-left place-checkbox">
+                                                                            <input type="checkbox" <?php if (in_array($val['id'], $modelGoodsIds)): ?>checked='checked'<?php endif ?> class="ace" name='goods_ids[]' value='<?php echo $val['id'] ?>'>
+                                                                            <span class="lbl"> <?php echo $val['name'] ?>&nbsp;&nbsp;</span>
+                                                                        </label>
+            <?php endforeach ?>
+        <?php endif ?>
+                                            </td>
+                                        </tr>
+    <?php endforeach; ?>
+                        </tbody>
+                    </table>
+<?php endif; ?>
     </div>
-</div>
+</div>-->
 <div class="form-group">
     <?php echo $form->labelEx($model, 'depart_ids', array('class' => 'col-sm-3 control-label no-padding-right')) ?>
-
     <div class="col-sm-9">
-        <?php echo $form->checkBoxList($model, 'depart_ids', Depart::getDepart(), array('placeholder' => '', 'separator' => ' ')) ?>
+        <label>
+            <input name="form-field-checkbox" type="checkbox" class="ace">
+            <span class="lbl"> choice 1</span>
+        </label>
     </div>
+    <!--    <div class="col-sm-9">
+    <?php echo $form->checkBoxList($model, 'depart_ids', Depart::getDepart(), array('placeholder' => '', 'separator' => ' ')) ?>
+        </div>-->
 </div>
 <div class="form-group">
     <?php echo $form->labelEx($model, 'first', array('class' => 'col-sm-3 control-label no-padding-right')) ?>
@@ -107,9 +112,7 @@ $form = $this->beginWidget('CActiveForm', array(
 </div>
 <div class="form-group">
     <?php echo $form->labelEx($model, 'desc', array('class' => 'col-sm-3 control-label no-padding-right')) ?>
-    <div class="col-sm-9">
-        <script id="container" name="Project[desc]" type="text/plain" data-width="1200"><?php echo $model->desc; ?></script>
-    </div>
+    <?php echo $form->textArea($model, 'desc', array('rows' => 10, 'cols' => 60)); ?>
 </div>
 <div class="clearfix form-actions">
     <div class="col-md-offset-3 col-md-9">
@@ -133,19 +136,19 @@ $form = $this->beginWidget('CActiveForm', array(
         $("#datepicker_begin").datepicker({
             showOtherMonths: true,
             selectOtherMonths: false,
-            dateFormat: 'yy-mm-dd',//日期格式  
+            dateFormat: 'yy-mm-dd', //日期格式  
         });
         $("#datepicker_end").datepicker({
             showOtherMonths: true,
             selectOtherMonths: false,
-            dateFormat: 'yy-mm-dd',//日期格式  
+            dateFormat: 'yy-mm-dd', //日期格式  
         });
     });
     $(function () {
         $('.is_second').on('click', function () {
             if ($('.second_caijia').hasClass('is_hidden')) {
                 $('.second_caijia').removeClass('is_hidden').addClass('is_active');
-            }else{
+            } else {
                 $('.second_caijia').removeClass('is_active').addClass('is_hidden');
             }
         });
