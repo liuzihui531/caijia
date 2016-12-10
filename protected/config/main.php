@@ -25,7 +25,7 @@ return array(
             // If removed, Gii defaults to localhost only. Edit carefully to taste.
             'ipFilters' => array('127.0.0.1', '192.168.10.196', '::1'),
         ),
-        'admin','wechat'
+        'admin','charge','front'
     ),
     // application components
     'components' => array(

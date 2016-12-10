@@ -1,24 +1,20 @@
 <?php
 
 /**
- * This is the model class for table "charge".
+ * This is the model class for table "project_place_relation".
  *
- * The followings are the available columns in table 'charge':
- * @property integer $id
- * @property string $name
- * @property integer $depart_id
- * @property string $mobile
- * @property string $password
- * @property integer $created
+ * The followings are the available columns in table 'project_place_relation':
+ * @property integer $project_id
+ * @property integer $place_id
  */
-class Charge extends CActiveRecord
+class ProjectPlaceRelation extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'charge';
+		return 'project_place_relation';
 	}
 
 	/**
@@ -29,15 +25,11 @@ class Charge extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name,depart_id,mobile, created', 'required'),
-			array('mobile', 'match', 'pattern' => '/^1[34578]\d{9}$/', 'message' => '手机号码格式不正确'),
-			array('depart_id, created', 'numerical', 'integerOnly'=>true),
-			array('name, password', 'length', 'max'=>32),
-			array('mobile', 'length', 'max'=>16),
-                        array("mobile","unique"),
+			array('project_id, place_id', 'required'),
+			array('project_id, place_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, depart_id, mobile, password, created', 'safe', 'on'=>'search'),
+			array('project_id, place_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -49,7 +41,6 @@ class Charge extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-                    'depart'=>array(self::BELONGS_TO,'Depart','depart_id'),
 		);
 	}
 
@@ -59,12 +50,8 @@ class Charge extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'name' => '姓名',
-			'depart_id' => '主管部门',
-			'mobile' => '联系方式',
-			'password' => '密码',
-			'created' => '创建时间',
+			'project_id' => '项目ID',
+			'place_id' => '采价点ID',
 		);
 	}
 
@@ -86,12 +73,8 @@ class Charge extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('name',$this->name,true);
-		$criteria->compare('depart_id',$this->depart_id);
-		$criteria->compare('mobile',$this->mobile,true);
-		$criteria->compare('password',$this->password,true);
-		$criteria->compare('created',$this->created);
+		$criteria->compare('project_id',$this->project_id);
+		$criteria->compare('place_id',$this->place_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -102,7 +85,7 @@ class Charge extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Charge the static model class
+	 * @return ProjectPlaceRelation the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

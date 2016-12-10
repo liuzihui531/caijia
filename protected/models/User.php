@@ -62,6 +62,7 @@ class User extends CActiveRecord {
             array('place_ids', 'length', 'max' => 128),
             array('bank', 'length', 'max' => 64),
             array('address', 'length', 'max' => 256),
+            array("mobile","unique"),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
             array('id, name, sex, mobile, idcard, password, place_ids, depart_id, bank, bank_card, address, education, created', 'safe', 'on' => 'search'),

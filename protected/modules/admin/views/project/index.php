@@ -9,15 +9,7 @@
                 <div class="widget-body">
                     <div class="widget-main">
                         <form class="form-inline" method="get">
-                            <input type="text" name="name" value="<?php echo Yii::app()->request->getParam('name', '') ?>" class="input-medium" placeholder="商品名称">
-                            <select name='cat_id'>
-                                <option value='0'>--请选择分类--</option>
-                                <?php if ($list): ?>
-                                    <?php foreach ($list as $key => $val): ?>
-                                        <option <?php if ($key == Yii::app()->request->getParam("cat_id", 0)): ?>selected="selected"<?php endif ?> value='<?php echo $key ?>'><?php echo $val ?></option>
-                                    <?php endforeach ?>
-                                <?php endif; ?>
-                            </select>
+                            <input type="text" name="name" value="<?php echo Yii::app()->request->getParam('name', '') ?>" class="input-medium" placeholder="项目名称">
                             <button type="submit" class="btn btn-purple btn-sm">
                                 搜索
                                 <i class="icon-search icon-on-right bigger-110"></i>
@@ -39,8 +31,7 @@
                                     <span class="lbl"></span>
                                 </label>
                             </th>
-                            <th>商品名称</th>
-                            <th>商品分类</th>
+                            <th>项目名称</th>
                             <th class="hidden-480">创建时间</th>
 
                             <th></th>
@@ -57,7 +48,6 @@
                                     </label>
                                 </td>
                                 <td><?php echo $v->name ?></td>
-                                <td><?php echo $v->goodsCategory->name ?></td>
                                 <td><?php echo date('Y-m-d H:i:s', $v->created) ?></td>
                                 <td>
                                     <a href="<?php echo $this->createUrl('update', array('id' => $v->id)) ?>">修改</a>

@@ -19,12 +19,22 @@ class GoodsController extends AdminBaseController {
     public function actionIndex() {
         $this->breadcrumbs = array($this->page_name.'管理');
         $name = Yii::app()->request->getParam('name','');
+        $cat_id = Yii::app()->request->getParam('cat_id',0);
         $criteria = new CDbCriteria();
+        $criteria->with = "goodsCategory";
         if($name){
-            $criteria->addSearchCondition('name', $name);
+            $criteria->addSearchCondition('t.name', $name);
+        }
+        if($cat_id){
+            $criteria->compare('cat_id', $cat_id);
         }
         $model = Goods::model()->findAll($criteria);
-        $this->render('index', array('model'=>$model));
+        $data = GoodsCategory::getGoodsCategory();
+        $list = array();
+        foreach ($data['unlimit'] as $k => $v){
+            $list[$v['id']] = $v['html'].$v['name'];
+        }
+        $this->render('index', array('model'=>$model,'list'=>$list));
     }
 
     public function actionCreate() {

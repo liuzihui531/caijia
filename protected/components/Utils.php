@@ -762,7 +762,7 @@ class Utils {
      */
     public static $top_id = 0;
 
-    public static function getUnLimitClass($cate, $pid = 0, $html = '　　', $level = 0) {
+    public static function getUnLimitClass($cate, $pid = 0, $html = '---', $level = 0) {
         $arr = array();
         foreach ($cate as $v) {
             if ($v['pid'] == $pid) {
@@ -1176,6 +1176,15 @@ class Utils {
     public static function mb_unserialize($serial_str) {
         $serial_str = preg_replace_callback('!s:(\d+):"(.*?)";!s', create_function('$math', "return 's:'.strlen(\$math[2]).':\"'.\$math[2].'\";';"), $serial_str);
         return unserialize($serial_str);
+    }
+    
+    public static function count_array($arr){
+        $i = 0;
+        foreach ($arr as $v){
+            if($v)
+                $i++;
+        }
+        return $i;
     }
 
 }
